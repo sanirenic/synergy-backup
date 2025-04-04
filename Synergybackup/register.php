@@ -2,7 +2,7 @@
 $host = "127.0.0.1";
 $username = "root";  
 $password = "";     
-$dbname = "ignite_registration";  
+$dbname = "ignite25_registration";  
 $port = 3308;       
 
 $conn = new mysqli($host, $username, $password, $dbname, $port);
@@ -14,23 +14,30 @@ if ($conn->connect_error) {
 
 // Get form data
 $name = $_POST['name'];
-$college = $_POST['college'];
-$college_id = $_POST['college_id'];
-$game = $_POST['game'];
+$contactNumber = $_POST['contact_number'];
+$collegeName = $_POST['college'];
+$email = $_POST['email'];
+$eventSelect = $_POST['game'];
+$teamName = $_POST['team_name'];
 
 // Handle file upload
 $target_dir = "uploads/";
-$payment_screenshot = $target_dir . basename($_FILES["payment_screenshot"]["name"]);
-move_uploaded_file($_FILES["payment_screenshot"]["tmp_name"], $payment_screenshot);
+$paymentProof = $target_dir . basename($_FILES["payment_screenshot"]["name"]);
 
-// Insert into database
-$sql = "INSERT INTO participants (full_name, contact_number, college_name, email, event, team_name, payment_proof)
-        VALUES ('$id', '$contactNumber', '$collegeName', '$email', '$eventSelect', '$teamName', '$paymentProof')";
+if (move_uploaded_file($_FILES["payment_screenshot"]["tmp_name"], $paymentProof)) {
+    
+    // Correct table name and column names
+    $sql = "INSERT INTO ignite25_registrations (fullName, contactNumber, collegeName, email, eventSelect, teamName, paymentProof)
+            VALUES ('$name', '$contactNumber', '$collegeName', '$email', '$eventSelect', '$teamName', '$paymentProof')";
 
-if ($conn->query($sql) === TRUE) {
-    echo "Registration successful!";
+    if ($conn->query($sql) === TRUE) {
+        echo "Registration successful!";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+
 } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+    echo "Error uploading file.";
 }
 
 $conn->close();
