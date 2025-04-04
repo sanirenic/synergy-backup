@@ -108,18 +108,19 @@
             </div>
 
             <div class="form-step" id="step3">
+                <label for="paymentQR">Scan the QR Code to Pay:</label><br>
+                <img src="SYNERGY IGDTUW_SYNERGYIGDTUWpsbpay_page-0001.jpg" alt="Payment QR Code" width="200" style="margin: 10px 0;"><br>
+            
                 <input type="file" id="paymentProof" accept="image/*" required>
                 <small>Upload Payment Screenshot</small>
             
                 <input type="file" id="collegeID" accept="image/*" required>
                 <small>Upload College ID Card</small>
             
-                <!-- Back Button -->
                 <button type="button" onclick="prevStep(2)">Back</button>
-            
-                <!-- Register & Download PDF Button (Make Sure It's Here!) -->
                 <button type="button" onclick="generatePDF()">Register & Download PDF</button>
             </div>
+            
             
         </form>
     </div>
